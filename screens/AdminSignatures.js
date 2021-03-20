@@ -108,7 +108,13 @@ export default class AdminSignatures extends Component {
             title="Voeg student toe"
             color="#AD0E0A"
           />
-          {/*<br></br>*/}
+          <Button
+            onPress={() => {
+              this.props.navigation.navigate("DeleteStudent")
+            }}
+            title="Verwijder student"
+            color="#AD0E0A"
+          />
           <SearchBar
             containerStyle={{ backgroundColor: "#F2F2F2", alignItems: "center", justifyContent: "center" }}
             placeholder="Zoek op studentennr,plaats of datum"
