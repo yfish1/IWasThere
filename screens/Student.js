@@ -38,7 +38,7 @@ export default class Home extends Component {
 
     db.transaction((tx) => {
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS tblSignature (Handtekening TEXT NOT NULL , Datum DATE, Locatie Varchar(50), StudentNr VARCHAR(7) NOT NULL, FOREIGN KEY(StudentNr) REFERENCES tblStudent(StudentNr), PRIMARY KEY (StudentNr,Datum,Locatie));"
+        "CREATE TABLE IF NOT EXISTS tblSignature (Handtekening TEXT NOT NULL , Datum DATE, Locatie Varchar(50), StudentNr VARCHAR(7) NOT NULL, FOREIGN KEY(StudentNr) REFERENCES tblStudent(StudentNr) ON DELETE CASCADE, PRIMARY KEY (StudentNr,Datum,Locatie));"
       );
     });
 

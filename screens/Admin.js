@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Input } from "react-native-elements";
 import styles from "../style/styles.js";
+import * as sha1 from 'js-sha1'
 
 export default class Admin extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class Admin extends Component {
   //showAlert = () => Alert.alert("Alert Title", "My Alert Msg");
 
   checkPassword = () => {
-    if (this.state.text == "Admin123") {
+    if (sha1(this.state.text) == "7af2d10b73ab7cd8f603937f7697cb5fe432c7ff") {
       this.props.navigation.navigate("AdminSignatures");
     } else {
       alert("Password is wrong, try again!");

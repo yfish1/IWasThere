@@ -15,6 +15,7 @@
     "expo-app-loading": "^1.0.1",
     "expo-sqlite": "^9.0.0",
     "expo-status-bar": "~1.0.3",
+    "js-sha1": "^0.6.0",
     "link": "^0.1.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -29,6 +30,7 @@
     "react-native-web": "~0.13.12",
     "react-native-webview": "^11.0.0",
     "resemblejs": "^3.2.5",
+    "sha1": "^1.1.1",
     "signature_pad": "^3.0.0-beta.4"
   },
   "devDependencies": {

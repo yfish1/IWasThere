@@ -19,12 +19,22 @@ export default class DeleteStudent extends Component {
     }
 
     deleteStudent() {
-        db.transaction((tx) => {
-            tx.executeSql(
-                "DELETE FROM tblStudent WHERE StudentNr = '" + this.state.input + "' OR Naam ='" + this.state.input + "';"
-            );
-        });
-        this.props.navigation.navigate("AdminSignatures") 
+        try {
+            db.transaction((tx) => {
+                try {
+                    tx.executeSql(
+                        "DELETE FROM tblStudent WHERE StudentNr = '" + this.state.input + "' OR Naam ='" + this.state.input + "';"
+                    );
+                } catch (error) {
+                    alert('Deze student bestaat niet.')
+                }
+
+            });
+            //this.props.navigation.navigate("AdminSignatures")
+        } catch (error) {
+            alert('Deze student bestaat niet.')
+        }
+
 
     }
     render() {
