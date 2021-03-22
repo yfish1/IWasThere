@@ -6,7 +6,6 @@ import Admin from "../screens/Admin";
 import AdminSignatures from "../screens/AdminSignatures";
 import CreateStudent from "../screens/CreateStudent";
 import Verification from "../screens/Verification"
-import DeleteStudent from "../screens/DeleteStudent";
 
 const StudentStack = createStackNavigator();
 const AdminStack = createStackNavigator();
@@ -34,7 +33,6 @@ const AdminStackNavigator = () => {
       />
       <AdminStack.Screen name="AdminSignatures" component={AdminSignatures} />
       <AdminStack.Screen name="CreateStudent" component={CreateStudent} />
-      <AdminStack.Screen name="DeleteStudent" component={DeleteStudent} />
       <AdminStack.Screen name="Verification" component={Verification} />
     </AdminStack.Navigator>
   );

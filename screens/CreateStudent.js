@@ -10,8 +10,13 @@ export default class CreateStudent extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { naam: '', studentennr: '' }
+        this.state = {
+            naam: '', studentennr: '',
+            students: ''
+        }
         this.addStudent = this.addStudent.bind(this)
+        this.addCSV = this.addCSV.bind(this)
+
     }
 
     changeName(naam) {
@@ -22,15 +27,45 @@ export default class CreateStudent extends Component {
         this.setState({ studentennr: studentennr })
     }
 
+    changeStudents(data) {
+        this.setState({ students: data })
+    }
+
     addStudent() {
         db.transaction((tx) => {
             tx.executeSql(
                 "INSERT INTO tblStudent (Naam, StudentNr) VALUES ('" + this.state.naam + "','" + this.state.studentennr + "');"
             );
         });
-        this.props.navigation.navigate("AdminSignatures") 
+        this.props.navigation.navigate("AdminSignatures")
 
     }
+
+    addCSV() {
+        var studentList = this.state.students
+        studentList = studentList.split(';')
+        var studentNumberList = []
+        var studentNameList = []
+        for (let index = 0; index < studentList.length; index++) {
+            if (studentList[index] != "") {
+                if (index % 2 == 0) {
+                    studentNameList.push(studentList[index]);
+                }
+                else {
+                    studentNumberList.push(studentList[index]);
+                }
+            }
+        }
+        for (let index = 0; index < studentNameList.length; index++) {
+            db.transaction((tx) => {
+                tx.executeSql(
+                    "INSERT INTO tblStudent (Naam, StudentNr) VALUES ('" + studentNameList[index] + "','" + studentNumberList[index] + "');"
+                );
+            });
+        }
+    }
+
+
     render() {
         return (
             <View style={{ backgroundColor: "#FFFFFF" }}>
@@ -54,12 +89,13 @@ export default class CreateStudent extends Component {
                 </View>
                 <View style={styles.container}>
                     <Text style={styles.header1}>VOEG EEN NIEUWE STUDENT TOE</Text>
-                    <View style={styles.container}>
+                    <Text style={styles.header2}> Breng manueel in</Text>
+                    <View>
                         <TextInput
                             autoCapitalize='none'
                             style={styles.textInput}
                             placeholder='Studentnaam'
-                            maxLength={20}
+                            maxLength={50}
                             onBlur={Keyboard.dismiss}
                             value={this.state.naam}
                             onChangeText={(txt) => this.changeName(txt)}
@@ -68,17 +104,27 @@ export default class CreateStudent extends Component {
                             autoCapitalize='none'
                             style={styles.textInput}
                             placeholder='Studentennr'
-                            maxLength={20}
+                            maxLength={7}
                             onBlur={Keyboard.dismiss}
                             value={this.state.studentennr}
                             onChangeText={(txt) => this.changeStudentnr(txt)}
                         />
-                        <View style={styles.container}>
-                            <TouchableOpacity style={styles.buttonStyle}
-                                onPress={this.addStudent}>
-                                <Text style={styles.styledButtonText}>Voeg toe</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity style={styles.buttonStyle}
+                            onPress={this.addStudent}>
+                            <Text style={styles.styledButtonText}>Voeg toe</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.header2}> Of importeer een csv-bestand</Text>
+                        <TextInput
+                            multiline="true"
+                            placeholder='Csv-bestand'
+                            numberOfLines={7}
+                            value={this.state.students}
+                            onChangeText={(txt) => this.changeStudents(txt)}>
+                        </TextInput>
+                        <TouchableOpacity style={styles.buttonStyle}
+                            onPress={this.addCSV}>
+                            <Text style={styles.styledButtonText}>Importeer</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

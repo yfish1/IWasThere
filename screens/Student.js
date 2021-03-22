@@ -17,18 +17,6 @@ export default class Home extends Component {
   }
 
   makeTables() {
-    //Moet nog weg!!!!
-    /*db.transaction((tx) => {
-      tx.executeSql(
-          "DROP TABLE tblSignature;"
-        );
-    });
-
-    db.transaction((tx) => {
-      tx.executeSql(
-          "DROP TABLE tblStudent;"
-        );
-    });*/
 
     db.transaction((tx) => {
       tx.executeSql(
@@ -41,7 +29,7 @@ export default class Home extends Component {
         "CREATE TABLE IF NOT EXISTS tblSignature (Handtekening TEXT NOT NULL , Datum DATE, Locatie Varchar(50), StudentNr VARCHAR(7) NOT NULL, FOREIGN KEY(StudentNr) REFERENCES tblStudent(StudentNr) ON DELETE CASCADE, PRIMARY KEY (StudentNr,Datum,Locatie));"
       );
     });
-
+    /*
     db.transaction((tx) => {
       tx.executeSql(
         "INSERT INTO tblStudent (Naam, StudentNr) VALUES ('Tom Riddle', 's114577');"
@@ -52,7 +40,7 @@ export default class Home extends Component {
       tx.executeSql(
         "INSERT INTO tblStudent (Naam, StudentNr) VALUES ('John Doe', 's132585');"
       );
-    });
+    });*/
   }
 
   getstudents() {
@@ -90,27 +78,15 @@ export default class Home extends Component {
       this.getstudents();
     });
   }
-  /*setData(key, value) {
-    var json = JSON.stringify(value);
-    localStorage.setItem(key, json);
-  }
-
-  getData(key) {
-    var json = localStorage.getItem(key);
-    var value = JSON.parse(json);
-    return value;
-  }*/
 
   getStudents() {
     return this.state.students;
   }
 
   updateSearch = (search) => {
-    if (search) {
       this.setState({ search });
       console.log(search)
       this.searchStudent()
-    }
   };
   clearSearch(){
     //this.setState({search:""})
@@ -118,9 +94,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { search } = this.state;
-    //this.setData("students", this.state.students);
-    //this.setData("location", this.state.location);
+    //const { search } = this.state.search;
     return (
       <View style={{ backgroundColor: "#FFFFFF" }}>
         <View style={styles.rowContainer}>
@@ -148,8 +122,8 @@ export default class Home extends Component {
             platform="ios"
             onChangeText={this.updateSearch}
             value={this.state.search}
-            onClear={this.clearSearch()}
-            onCancel={this.clearSearch()}
+            onClear={this.clearSearch}
+            onCancel={this.clearSearch}
           />
         </View>
         <View style={{ backgroundColor: "#F2F2F2" }}>

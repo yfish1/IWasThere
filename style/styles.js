@@ -52,7 +52,6 @@ const styles = {
     backgroundColor: "#ffffff",
     margin: 10,
   },
-
   /*container: {
     flex: 1,
     paddingTop: 40,

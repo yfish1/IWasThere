@@ -21,11 +21,11 @@ export default class AdminSignatures extends Component {
       signatures: [],
       search: ''
     };
-    this.getsignatures = this.getsignatures.bind(this)
+    this.getSignatures = this.getSignatures.bind(this)
     this.showSignatures = this.showSignatures.bind(this)
   }
 
-  getsignatures() {
+  getSignatures() {
     db.transaction((tx) => {
       tx.executeSql(
         "select * from tblSignature ORDER BY Datum DESC;",
@@ -54,9 +54,9 @@ export default class AdminSignatures extends Component {
   }
 
   componentDidMount() {
-    this.getsignatures()
+    this.getSignatures()
     this._unsubscribe = this.props.navigation.addListener("focus", () => {
-      this.getsignatures();
+      this.getSignatures();
     });
   }
 
@@ -65,16 +65,31 @@ export default class AdminSignatures extends Component {
   }
 
   updateSearch = (search) => {
-    if (search!="") {
+    //if (search!="") {
       this.setState({ search });
       console.log(search)
       this.searchSignature()
-    }
+    //}
   };
 
   clearSearch(){
     //this.setState({search:""})
     this.showSignatures()
+  }
+
+  clearTables(){
+    alert('Bent u zeker dat u de tabellen wil leegmaken?')
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM tblSignature;"
+      );
+    });
+    db.transaction((tx) => {
+      tx.executeSql(
+        "DELETE FROM tblStudent;"
+      );
+    });
+    this.getSignatures()
   }
 
   render() {
@@ -110,9 +125,9 @@ export default class AdminSignatures extends Component {
           />
           <Button
             onPress={() => {
-              this.props.navigation.navigate("DeleteStudent")
+              this.clearTables()
             }}
-            title="Verwijder student"
+            title="Clear tabellen"
             color="#AD0E0A"
           />
           <SearchBar
@@ -121,8 +136,8 @@ export default class AdminSignatures extends Component {
             platform="ios"
             onChangeText={this.updateSearch}
             value={this.state.search}
-            onClear={this.clearSearch()}
-            onCancel={this.clearSearch()}
+            onClear={this.clearSearch}
+            onCancel={this.clearSearch}
           />
           <FlatList
             style={{ marginLeft: 450, marginTop: 40, marginBottom:40, marginRight:450 }}

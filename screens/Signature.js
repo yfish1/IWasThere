@@ -82,8 +82,6 @@ export default class Signature extends Component {
         //"INSERT INTO tblSignature (Handtekening,StudentNr) VALUES ('"+this.state.signature+"','s114577');"
       );
     });
-
-
   }
 
   save() {
