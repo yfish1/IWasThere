@@ -63,6 +63,7 @@ export default class CreateStudent extends Component {
                 );
             });
         }
+        this.props.navigation.navigate("AdminSignatures")
     }
 
 
